@@ -1,0 +1,788 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Sign in to your campus portal to stay connected with classes, resources, and campus life."
+    />
+    <title>Sign in | Northstar Campus</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+        color: #17233c;
+        background: #f5f7fb;
+        font-synthesis: none;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        --navy: #17233c;
+        --muted: #78839a;
+        --blue: #4667ed;
+        --line: #e5e9f1;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        min-width: 320px;
+        min-height: 100vh;
+        margin: 0;
+        display: grid;
+        place-items: center;
+        padding: 32px;
+        background:
+          radial-gradient(ellipse at 12% 12%, #e8edff 0, transparent 34%),
+          radial-gradient(ellipse at 90% 86%, #e8f4f4 0, transparent 28%),
+          #f5f7fb;
+      }
+
+      button,
+      input {
+        font: inherit;
+      }
+
+      .page {
+        width: min(1056px, 100%);
+        min-height: 650px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        overflow: hidden;
+        border: 1px solid rgba(226, 231, 241, 0.8);
+        border-radius: 24px;
+        background: #fff;
+        box-shadow: 0 28px 80px rgba(34, 49, 86, 0.12);
+      }
+
+      .welcome-panel {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        overflow: hidden;
+        padding: 38px 44px 30px;
+        color: #fff;
+        background:
+          radial-gradient(ellipse at 86% 16%, rgba(119, 144, 255, 0.44), transparent 34%),
+          linear-gradient(145deg, #253b82 0%, #354eb1 55%, #5269d2 100%);
+      }
+
+      .welcome-panel::before,
+      .welcome-panel::after {
+        position: absolute;
+        z-index: 0;
+        content: "";
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 50%;
+        pointer-events: none;
+      }
+
+      .welcome-panel::before {
+        width: 430px;
+        height: 430px;
+        right: -230px;
+        top: 160px;
+      }
+
+      .welcome-panel::after {
+        width: 330px;
+        height: 330px;
+        right: -180px;
+        top: 210px;
+      }
+
+      .brand,
+      .welcome-copy,
+      .panel-footer {
+        position: relative;
+        z-index: 1;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        width: fit-content;
+        color: inherit;
+        font-size: 15px;
+        font-weight: 700;
+        letter-spacing: 0.01em;
+        text-decoration: none;
+      }
+
+      .brand-mark {
+        width: 38px;
+        height: 38px;
+        display: grid;
+        place-items: center;
+        border: 1px solid rgba(255, 255, 255, 0.26);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.13);
+      }
+
+      .brand-mark svg {
+        width: 21px;
+        height: 21px;
+      }
+
+      .welcome-copy {
+        max-width: 410px;
+        margin-top: 40px;
+        margin-bottom: auto;
+        padding-top: 62px;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #dce4ff;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+      }
+
+      .eyebrow::before {
+        width: 18px;
+        height: 1px;
+        content: "";
+        background: #aebeff;
+      }
+
+      h1 {
+        max-width: 390px;
+        margin: 17px 0 15px;
+        font-size: clamp(32px, 4vw, 43px);
+        font-weight: 650;
+        letter-spacing: -0.045em;
+        line-height: 1.12;
+      }
+
+      .welcome-copy > p {
+        max-width: 345px;
+        margin: 0;
+        color: #d4dcf8;
+        font-size: 14px;
+        line-height: 1.75;
+      }
+
+      .campus-card {
+        width: min(100%, 355px);
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-top: 40px;
+        padding: 15px 16px;
+        border: 1px solid rgba(255, 255, 255, 0.17);
+        border-radius: 15px;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(8px);
+      }
+
+      .campus-icon {
+        width: 42px;
+        height: 42px;
+        flex: 0 0 auto;
+        display: grid;
+        place-items: center;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.15);
+      }
+
+      .campus-icon svg {
+        width: 23px;
+        height: 23px;
+      }
+
+      .campus-card strong,
+      .campus-card span {
+        display: block;
+      }
+
+      .campus-card strong {
+        margin-bottom: 4px;
+        font-size: 13px;
+      }
+
+      .campus-card span {
+        color: #d4dcf8;
+        font-size: 11px;
+      }
+
+      .panel-footer {
+        margin-top: 48px;
+        color: #c9d2f3;
+        font-size: 11px;
+      }
+
+      .form-panel {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 56px 58px;
+      }
+
+      .login-form {
+        width: min(100%, 360px);
+      }
+
+      .form-heading {
+        margin: 0 0 9px;
+        color: var(--navy);
+        font-size: 29px;
+        font-weight: 680;
+        letter-spacing: -0.04em;
+      }
+
+      .form-intro {
+        margin: 0 0 34px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.6;
+      }
+
+      .demo-account {
+        margin: -15px 0 24px;
+        padding: 13px 15px;
+        border: 1px solid #e6eaff;
+        border-radius: 10px;
+        background: #f7f8ff;
+      }
+
+      .demo-account-heading {
+        margin: 0 0 8px;
+        color: #4359b5;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .demo-account-details {
+        display: grid;
+        gap: 5px;
+        color: #69758b;
+        font-size: 11px;
+      }
+
+      .demo-account-details code {
+        color: #313e59;
+        font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+        font-size: 11px;
+      }
+
+      .demo-fill {
+        margin-top: 10px;
+        padding: 0;
+        border: 0;
+        color: var(--blue);
+        background: transparent;
+        font-size: 11px;
+        font-weight: 650;
+        cursor: pointer;
+      }
+
+      .demo-fill:hover {
+        text-decoration: underline;
+      }
+
+      .field {
+        margin-bottom: 21px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 9px;
+        color: #313e59;
+        font-size: 12px;
+        font-weight: 650;
+      }
+
+      .input-wrap {
+        position: relative;
+      }
+
+      .input-icon {
+        position: absolute;
+        top: 50%;
+        left: 14px;
+        width: 17px;
+        height: 17px;
+        color: #929cb0;
+        transform: translateY(-50%);
+        pointer-events: none;
+      }
+
+      input[type="email"],
+      input[type="password"],
+      input[type="text"] {
+        width: 100%;
+        height: 48px;
+        padding: 0 44px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        outline: none;
+        color: var(--navy);
+        background: #fff;
+        font-size: 13px;
+        transition:
+          border-color 160ms ease,
+          box-shadow 160ms ease;
+      }
+
+      input::placeholder {
+        color: #a5adbc;
+      }
+
+      input[type="email"]:focus,
+      input[type="password"]:focus,
+      input[type="text"]:focus {
+        border-color: #8194f5;
+        box-shadow: 0 0 0 3px rgba(70, 103, 237, 0.12);
+      }
+
+      .password-toggle {
+        position: absolute;
+        top: 50%;
+        right: 12px;
+        display: grid;
+        place-items: center;
+        padding: 5px;
+        border: 0;
+        border-radius: 5px;
+        color: #8792a8;
+        background: transparent;
+        cursor: pointer;
+        transform: translateY(-50%);
+      }
+
+      .password-toggle:hover {
+        color: var(--blue);
+      }
+
+      .password-toggle svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .form-options {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin: 2px 0 25px;
+      }
+
+      .remember {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin: 0;
+        color: #69758b;
+        font-size: 11px;
+        font-weight: 500;
+        cursor: pointer;
+      }
+
+      .remember input {
+        width: 15px;
+        height: 15px;
+        margin: 0;
+        accent-color: var(--blue);
+      }
+
+      .text-link {
+        color: var(--blue);
+        font-size: 11px;
+        font-weight: 650;
+        text-decoration: none;
+      }
+
+      .text-link:hover {
+        text-decoration: underline;
+      }
+
+      .submit-button {
+        width: 100%;
+        height: 48px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 9px;
+        border: 0;
+        border-radius: 10px;
+        color: #fff;
+        background: var(--blue);
+        box-shadow: 0 7px 16px rgba(70, 103, 237, 0.2);
+        font-size: 13px;
+        font-weight: 650;
+        cursor: pointer;
+        transition:
+          background 160ms ease,
+          transform 160ms ease,
+          box-shadow 160ms ease;
+      }
+
+      .submit-button:hover {
+        background: #3758df;
+        box-shadow: 0 9px 20px rgba(70, 103, 237, 0.28);
+        transform: translateY(-1px);
+      }
+
+      .submit-button:focus-visible,
+      .password-toggle:focus-visible,
+      .text-link:focus-visible {
+        outline: 3px solid rgba(70, 103, 237, 0.35);
+        outline-offset: 3px;
+      }
+
+      .submit-button svg {
+        width: 16px;
+        height: 16px;
+      }
+
+      .status-message {
+        min-height: 18px;
+        margin: 12px 0 0;
+        color: #a44c30;
+        font-size: 11px;
+        line-height: 1.55;
+      }
+
+      .status-message[data-state="success"] {
+        color: #287451;
+      }
+
+      .divider {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin: 25px 0 19px;
+        color: #a0a9b8;
+        font-size: 10px;
+      }
+
+      .divider::before,
+      .divider::after {
+        height: 1px;
+        flex: 1;
+        content: "";
+        background: var(--line);
+      }
+
+      .help-note {
+        margin: 0;
+        color: var(--muted);
+        font-size: 11px;
+        line-height: 1.7;
+        text-align: center;
+      }
+
+      .help-note a {
+        color: var(--blue);
+        font-weight: 650;
+        text-decoration: none;
+      }
+
+      .help-note a:hover {
+        text-decoration: underline;
+      }
+
+      @media (max-width: 760px) {
+        body {
+          padding: 20px;
+        }
+
+        .page {
+          min-height: 0;
+          grid-template-columns: 1fr;
+          max-width: 480px;
+        }
+
+        .welcome-panel {
+          min-height: 280px;
+          padding: 26px 30px 24px;
+        }
+
+        .welcome-copy {
+          margin-top: 26px;
+          padding-top: 18px;
+        }
+
+        h1 {
+          max-width: 330px;
+          margin-top: 12px;
+          font-size: 32px;
+        }
+
+        .welcome-copy > p {
+          max-width: 380px;
+          font-size: 12px;
+        }
+
+        .campus-card,
+        .panel-footer {
+          display: none;
+        }
+
+        .form-panel {
+          padding: 38px 30px 34px;
+        }
+
+        .form-intro {
+          margin-bottom: 26px;
+        }
+      }
+
+      @media (max-width: 380px) {
+        body {
+          padding: 12px;
+        }
+
+        .welcome-panel {
+          padding-right: 22px;
+          padding-left: 22px;
+        }
+
+        .form-panel {
+          padding-right: 22px;
+          padding-left: 22px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <section class="welcome-panel" aria-labelledby="welcome-title">
+        <a class="brand" href="#" aria-label="Northstar Campus home">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path
+                d="M12 2.8 14.2 9.8 21.2 12l-7 2.2-2.2 7-2.2-7-7-2.2 7-2.2L12 2.8Z"
+                stroke="currentColor"
+                stroke-linejoin="round"
+                stroke-width="1.7"
+              />
+              <circle cx="12" cy="12" r="2" fill="currentColor" />
+            </svg>
+          </span>
+          Northstar Campus
+        </a>
+
+        <div class="welcome-copy">
+          <span class="eyebrow">Your campus, connected</span>
+          <h1 id="welcome-title">Make every day on campus count.</h1>
+          <p>
+            One place for your classes, campus resources, and everything
+            happening in your college community.
+          </p>
+
+          <div class="campus-card">
+            <span class="campus-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M3 9.5 12 4l9 5.5M5.5 10.5v7m4.3-7v7m4.4-7v7m4.3-7v7M3.5 20h17M4 17.5h16"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.6"
+                />
+              </svg>
+            </span>
+            <span>
+              <strong>Everything in one place</strong>
+              <span>Learning, services, and student life</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="panel-footer">A brighter way to do college.</div>
+      </section>
+
+      <section class="form-panel" aria-labelledby="login-title">
+        <form class="login-form" id="login-form">
+          <h2 class="form-heading" id="login-title">Welcome back</h2>
+          <p class="form-intro">Sign in with your college account to continue.</p>
+
+          <aside class="demo-account" aria-label="Sample student account">
+            <p class="demo-account-heading">Sample account · front-end demo</p>
+            <div class="demo-account-details">
+              <span>Email: <code>student@northstar.edu</code></span>
+              <span>Password: <code>CampusDemo2026</code></span>
+            </div>
+            <button class="demo-fill" id="demo-fill" type="button">Fill sample account</button>
+          </aside>
+
+          <div class="field">
+            <label for="student-email">College email</label>
+            <div class="input-wrap">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect
+                  x="3.5"
+                  y="5"
+                  width="17"
+                  height="14"
+                  rx="2.5"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                />
+                <path
+                  d="m5 7 7 5.5L19 7"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="1.6"
+                />
+              </svg>
+              <input
+                id="student-email"
+                name="email"
+                type="email"
+                autocomplete="username"
+                placeholder="you@college.edu"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="student-password">Password</label>
+            <div class="input-wrap">
+              <svg class="input-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <rect
+                  x="4.5"
+                  y="10"
+                  width="15"
+                  height="11"
+                  rx="2.5"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                />
+                <path
+                  d="M8 10V7a4 4 0 1 1 8 0v3m-4 4v3"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-width="1.6"
+                />
+              </svg>
+              <input
+                id="student-password"
+                name="password"
+                type="password"
+                autocomplete="current-password"
+                placeholder="Enter your password"
+                required
+              />
+              <button
+                class="password-toggle"
+                id="password-toggle"
+                type="button"
+                aria-label="Show password"
+                aria-pressed="false"
+              >
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path
+                    d="M2.8 12s3.2-6 9.2-6 9.2 6 9.2 6-3.2 6-9.2 6-9.2-6-9.2-6Z"
+                    stroke="currentColor"
+                    stroke-linejoin="round"
+                    stroke-width="1.6"
+                  />
+                  <circle cx="12" cy="12" r="2.7" stroke="currentColor" stroke-width="1.6" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="form-options">
+            <label class="remember" for="remember-me">
+              <input id="remember-me" name="remember" type="checkbox" />
+              Remember me
+            </label>
+            <a class="text-link" href="mailto:help@northstar.example?subject=Password%20reset">
+              Forgot password?
+            </a>
+          </div>
+
+          <button class="submit-button" type="submit">
+            Sign in
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M5 12h14m-6-6 6 6-6 6"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.8"
+              />
+            </svg>
+          </button>
+          <p class="status-message" id="form-status" role="status" aria-live="polite"></p>
+
+          <div class="divider">NEED A HAND?</div>
+          <p class="help-note">
+            Having trouble signing in?
+            <a href="mailto:help@northstar.example">Contact campus support</a>
+          </p>
+        </form>
+      </section>
+    </main>
+
+    <script>
+      const passwordInput = document.querySelector("#student-password");
+      const passwordToggle = document.querySelector("#password-toggle");
+      const loginForm = document.querySelector("#login-form");
+      const formStatus = document.querySelector("#form-status");
+      const demoFill = document.querySelector("#demo-fill");
+      const emailInput = document.querySelector("#student-email");
+
+      const demoCredentials = {
+        email: "student@northstar.edu",
+        password: "CampusDemo2026",
+      };
+
+      passwordToggle.addEventListener("click", () => {
+        const isPasswordHidden = passwordInput.type === "password";
+        passwordInput.type = isPasswordHidden ? "text" : "password";
+        passwordToggle.setAttribute("aria-pressed", String(isPasswordHidden));
+        passwordToggle.setAttribute(
+          "aria-label",
+          isPasswordHidden ? "Hide password" : "Show password",
+        );
+      });
+
+      demoFill.addEventListener("click", () => {
+        emailInput.value = demoCredentials.email;
+        passwordInput.value = demoCredentials.password;
+        formStatus.textContent = "";
+        formStatus.removeAttribute("data-state");
+        emailInput.focus();
+      });
+
+      loginForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const credentialsMatch =
+          emailInput.value.trim().toLowerCase() === demoCredentials.email &&
+          passwordInput.value === demoCredentials.password;
+
+        formStatus.dataset.state = credentialsMatch ? "success" : "error";
+        formStatus.textContent = credentialsMatch
+          ? "Demo sign-in successful. This is a front-end preview only; no account was authenticated."
+          : "Those details do not match the sample account shown above.";
+      });
+    </script>
+  </body>
+</html>
