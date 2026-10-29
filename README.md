@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Northstar Buildathon
 
 A responsive, single-page landing page for a proposed Northstar Campus student hackathon. It introduces the event, suggests project themes, outlines a sample schedule, and provides a registration-interest form preview.
@@ -27,3 +28,7 @@ The form is a front-end preview only. It validates required fields in the browse
 ## License
 
 This project is distributed under the MIT License. See [`LICENSE`](./LICENSE) for the full text.
+=======
+# AIassist2
+This is a tutorial project on AI assist sd
+>>>>>>> c0bd03fba0f4dd9dcdd62543ca06c7994aa4a181
